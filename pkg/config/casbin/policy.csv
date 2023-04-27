@@ -1,0 +1,20 @@
+g, authorized, any
+g, unauthorized, any
+g, director, any
+g, admin, any
+g, programmer, any
+
+p, unauthorized, /ping, GET
+p, unauthorized, /register, POST
+p, director, /login, POST
+p, admin, /login, POST
+p, programmer, /login, POST
+p, admin, /programmers, GET
+p, director, /programmers, GET
+p, director, /programmer/{id}, GET
+p, admin, /programmer/{id}, GET
+p, programmer, /programmer/{id}, GET
+p, unauthorized, /programmer, PUT
+p, director, /programmer/{id}, DELETE
+p, admin, /programmer/{id}, DELETE
+p, programmer, /programmer/{id}, DELETE
