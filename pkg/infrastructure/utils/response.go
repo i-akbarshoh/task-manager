@@ -10,3 +10,11 @@ type RegisterResponseModel struct {
 type LoginResponseModel struct {
 	ID string `json:"id"`
 }
+
+type CreateTaskResponseModel struct {
+	ID int `json:"id"`
+}
+
+type WriteCommentResponseModel struct {
+	ID int `json:"id"`
+}

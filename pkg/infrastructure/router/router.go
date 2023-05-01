@@ -19,6 +19,22 @@ func NewRouter(c controller.Controller) *gin.Engine {
 	r.GET("/programmers", c.GetProgrammers)
 	r.GET("/programmer/:id", c.GetProgrammer) // TODO: authorization is not working
 	r.PUT("/programmer", c.UpdatePassword)
-	r.DELETE("/programmer/:id", c.DeleteUser)
+	r.DELETE("/programmer", c.DeleteUser)
+	r.POST("/create-project", c.CreateProject)
+	r.GET("/projects", c.GetProjects)
+	r.PUT("/update-project-status", c.UpdateProjectStatus)
+	r.DELETE("/delete-project", c.DeleteProject)
+	r.GET("/project/:id", c.GetProject)
+	r.POST("/add-attendance", c.AddAttendance)
+	r.GET("/user-attendances", c.GetUserAttendances)
+	r.POST("/create-task", c.CreateTask)
+	r.PUT("/update-task-status", c.UpdateTaskStatus)
+	r.GET("/tasks", c.GetTasks)
+	r.GET("/task/", c.GetTask)
+	r.DELETE("/delete-task", c.DeleteTask)
+	r.PUT("/update-task", c.UpdateTask)
+	r.POST("/write-comment", c.WriteComment)
+	r.GET("/comments", c.GetComments)
+	r.DELETE("/delete-comment", c.DeleteComment)
 	return r
 }
