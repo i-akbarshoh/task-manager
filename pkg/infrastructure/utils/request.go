@@ -84,3 +84,7 @@ type DeleteCommentRequestModel struct {
 	Phone    string `json:"phone"`
 	Password string `json:"password"`
 }
+
+type GetWithIDRequestModel struct {
+	ID int `json:"id"`
+}

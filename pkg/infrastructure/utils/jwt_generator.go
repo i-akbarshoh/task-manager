@@ -41,11 +41,8 @@ func GenerateNewTokens(id string, credentials map[string]string) (*Tokens, error
 }
 
 func generateNewAccessToken(id string, credentials map[string]string) (string, int64, error) {
-
-	// Create a new claims.
 	claims := jwt.MapClaims{}
 
-	// Set public claims:
 	claims["id"] = id
 	claims["role"] = credentials["role"]
 
@@ -56,10 +53,8 @@ func generateNewAccessToken(id string, credentials map[string]string) (string, i
 		// in staging server access token ttl = a day
 		claims["expires"] = time.Now().Add(time.Hour * time.Duration(config.C.JWT.Expire)).Unix()
 	}
-	// Create a new JWT access token with claims.
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	// Generate token.
 	t, err := token.SignedString([]byte(config.C.JWT.SigningKey))
 	if err != nil {
 		// Return error, it JWT token generation failed.
@@ -70,18 +65,15 @@ func generateNewAccessToken(id string, credentials map[string]string) (string, i
 }
 
 func generateNewRefreshToken() (string, error) {
-	// Create a new SHA256 hash
 	sha256Hash := sha256.New()
 
 	refresh := config.C.JWT.RefreshKey + time.Now().String()
 
 	_, err := sha256Hash.Write([]byte(refresh))
 	if err != nil {
-		// Return error, if refresh token generation failed
 		return "", err
 	}
 
-	// Set expiration time.
 	expireTime := fmt.Sprint(time.Now().Add(time.Hour * time.Duration(config.C.JWT.RExpire)).Unix())
 
 	// Create a new refresh token (sha256 string with salt + expire time)

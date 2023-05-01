@@ -7,7 +7,6 @@ import (
 	"github.com/i-akbarshoh/task-manager/pkg/domain/models"
 	"github.com/i-akbarshoh/task-manager/pkg/infrastructure/utils"
 	"github.com/i-akbarshoh/task-manager/pkg/registry/repository"
-	"strconv"
 )
 
 type controller struct {
@@ -110,8 +109,16 @@ func (con *controller) GetProgrammers(c *gin.Context) {
 }
 
 func (con *controller) GetProgrammer(c *gin.Context) {
-	id := c.Param("id")
-	programmer, err := con.r.GetProgrammer(id)
+	var body struct {
+		ID string `json:"id"`
+	}
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{
+			"message": "cannot bind body, " + err.Error(),
+		})
+		return
+	}
+	programmer, err := con.r.GetProgrammer(body.ID)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": "cannot get programmer, " + err.Error(),
@@ -255,15 +262,16 @@ func (con *controller) DeleteProject(c *gin.Context) {
 }
 
 func (con *controller) GetProject(c *gin.Context) {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
-	if err != nil {
+	var (
+		body utils.GetWithIDRequestModel
+	)
+	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, gin.H{
 			"message": "invalid id, " + err.Error(),
 		})
 		return
 	}
-	project, err := con.r.GetProject(idInt)
+	project, err := con.r.GetProject(body.ID)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": "cannot get project, " + err.Error(),
@@ -402,15 +410,16 @@ func (con *controller) GetTasks(c *gin.Context) {
 }
 
 func (con *controller) GetTask(c *gin.Context) {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
-	if err != nil {
+	var (
+		body utils.GetWithIDRequestModel
+	)
+	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, gin.H{
 			"message": "invalid id, " + err.Error(),
 		})
 		return
 	}
-	task, err := con.r.GetTask(idInt)
+	task, err := con.r.GetTask(body.ID)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": "cannot get task, " + err.Error(),
