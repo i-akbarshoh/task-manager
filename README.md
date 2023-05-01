@@ -4,7 +4,8 @@ This task manager is simple crm project for development team4
 ## Run project
 1. Clone project
 2. Install docker and docker-compose
-3. Run command `docker-compose up -d --build`
+3. source .env file
+4. Run command `docker-compose up -d --build`
 
 ## To test connection rest api
 ```bash

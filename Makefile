@@ -2,7 +2,7 @@ run:
 	go run cmd/app/main.go
 docker:
 	sh ./bin/docker.sh
-compose: docker
+compose:
 	docker-compose up -d
 rm:
 	docker-compose down && docker rmi ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}
